@@ -158,6 +158,8 @@ urlpatterns = [
     url(r'^custinvorecptcreate$', views.custinvorecptcreate, name='custinvorecptcreate'),
     url(r'^gocustrmasterdata$', views.gocustrmasterdata, name='gocustrmasterdata'),
     url(r'^custrmasterdatacreate$', views.custrmasterdatacreate, name='custrmasterdatacreate'),
+    # url(r'^CustomerMasterdataReport$', views.CustomerMasterdataReport, name='CustomerMasterdataReport'),
+
     url(r'^gosupstms$', views.gosupstms, name='gosupstms'),
     url(r'^supstmscreate$', views.supstmscreate, name='supstmscreate'),
     url(r'^gosupouts$', views.gosupouts, name='gosupouts'),

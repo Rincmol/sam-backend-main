@@ -16,6 +16,15 @@
   left: 10cm;
     }
 
+    /* Automatic Serial Number Row */
+.css-serial {
+ counter-reset: serial-number; /* Set the serial number counter to 0 */
+}
+.css-serial td:first-child:before {
+ counter-increment: serial-number; /* Increment the serial number counter */
+ content: counter(serial-number); /* Display the counter */
+}
+
 </style>
 </head>
 <body>
@@ -33,7 +42,7 @@
                     </div>
 					<!--end breadcrumb-->
                     <div class="container">
-                    <form action="ldgrstmtcreate" method="POST"  class="needs-validation" novalidate>
+                    <form action="supstmscreate" method="POST"  class="needs-validation" novalidate>
                                 {% csrf_token %}
                         <div class="row">
 
@@ -84,7 +93,7 @@
                             <!--Table-->
                             <div class="row">
                                 <div class="col">
-                                    <table class="table table-bordered">
+                                    <table border="1" class="css-serial" class="table table-bordered">
             <thead>
               <tr>
               <th>Sl.no</th>
@@ -96,123 +105,24 @@
               <th>Balance</th>
               </tr>
             </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
-              <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-              </tr>
+             <tbody>
+              {% for i  in report %}   
+             <tr>
+               
+              <td>&nbsp;</td> 
+               <td>{{ i.date }}</td>
+               <td>{{ i.internal_ref_no }}</td>
+               <td>{{ i.credit_limit_amt }}</td>
+               <td>{{ i.invoice_amt1 }}</td>
+               <td>{{ i.received_amt1 }}</td>
+               <td>{{ i.balance_amt1 }}</td>
+             </tr>
+             
 
 
 
-
-
-            </tbody>
+             {% endfor %}  
+           </tbody>
           </table>
                                 </div>
 

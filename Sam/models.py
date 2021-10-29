@@ -42,6 +42,8 @@ class Customer(models.Model):
     open_balance    =   models.TextField(max_length=100)
     credit_lim_am   =   models.TextField(max_length=100)
     credit_lim_dur  =   models.TextField(max_length=100)
+    created_at = models.DateField(default=datetime.datetime.now,editable=False)
+    updated_at = models.DateField(null=True)
 
 class Supplier(models.Model):
     customer_name   =   models.TextField(max_length=100)
@@ -59,7 +61,8 @@ class Supplier(models.Model):
     credit_lim_dur  =   models.TextField(max_length=100)
     bank_acc_name   =   models.TextField(max_length=100)
     bank_acc_no     =   models.TextField(max_length=100)
-
+    created_at = models.DateField(default=datetime.datetime.now,editable=False)
+    updated_at = models.DateField(null=True)
 
 
 class User(models.Model):
@@ -549,3 +552,8 @@ class Supplier_Invoice_Receipt(models.Model):
 class Supplier_Masterdata(models.Model):
     date = models.TextField(max_length=100)
     report_date = models.TextField(max_length=100)
+    created_at = models.DateField(auto_now_add=True,auto_now=False)
+    updated_at = models.DateTimeField(null=True)
+
+
+    # default=datetime.datetime.now,editable=False

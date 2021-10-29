@@ -1,7 +1,10 @@
+from datetime import datetime
+from django.shortcuts import HttpResponse
+from django.db.models.fields import DateTimeField
 from django.shortcuts import render, redirect
 from Sam.models import Customer, Customer_Invoice, Customer_Invoice_Receipt, Customer_Masterdata, Customer_Outstand, Customer_Receipt, Customer_Statement, Supplier, Stock_Adjustment, Supplier_Invoice, Supplier_Invoice_Receipt, Supplier_Masterdata, Supplier_Outstand, Supplier_Statement, job_Masterdata, job_Statement, Stock_Masterdata, Ledger_Masterdata,Item_Statement, Stock_Balance, Group, Ledger, PCredit, PCash,Ledger_Statement, Ledger_Journal, PRSales_Return, Item, Job, Asset, Liabilities, Expences, Receipt, PReceipt, Income, Cash, Credit, Sales_Return, payment_History
 from .forms import ItemForm, JobForm
-
+from rest_framework.exceptions import AuthenticationFailed
 
 def go(request):
     return render(request,'Sam/dashboard.html')
@@ -70,15 +73,33 @@ def jobmastercreate(request):
 def gocuststms(request):
     return render(request,'Sam/Customer AccountStatement.html')
 def custstmscreate(request):
-    cus1 = Customer_Statement(date=request.POST['date'], report_period=request.POST['report_period'],customer_name= request.POST['customer_name'],customer_id=request.POST['customer_id'],)
-    cus1.save()
-    return redirect('/')
+    # cus1 = Customer_Statement(date=request.POST['date'], report_period=request.POST['report_period'],customer_name= request.POST['customer_name'],customer_id=request.POST['customer_id'],)
+    # cus1.save()
+    # return redirect('/')
+
+    custid = request.POST.get('customer_id')
+    # custnm = request.POST.get('customer_name')
+    report1 = Receipt.objects.all()
+    report = report1.filter(customer_id = custid)
+    context = {'report': report}
+    return render(request,'Sam/Customer AccountStatement.html', context)
+
+
 def gocustouts(request):
     return render(request,'Sam/Customer Outstanding.html')
 def custoutscreate(request):
-    cus1 = Customer_Outstand(date=request.POST['date'], report_date=request.POST['report_date'],customer_name= request.POST['customer_name'],customer_id=request.POST['customer_id'],)
-    cus1.save()
-    return redirect('/')
+    # cus1 = Customer_Outstand(date=request.POST['date'], report_date=request.POST['report_date'],customer_name= request.POST['customer_name'],customer_id=request.POST['customer_id'],)
+    # cus1.save()
+    # return redirect('/')
+
+    custid = request.POST.get('customer_id')
+    # custnm = request.POST.get('customer_name')
+    report1 = Receipt.objects.all()
+    report = report1.filter(customer_id = custid)
+    context = {'report': report}
+    return render(request,'Sam/Customer Outstanding.html', context)
+
+
 def gocustinvo(request):
     return render(request,'Sam/Customer InvoiceHistory.html')
 def custinvocreate(request):
@@ -100,22 +121,68 @@ def custinvorecptcreate(request):
 def gocustrmasterdata(request):
     return render(request,'Sam/Customer Masterdata.html')
 def custrmasterdatacreate(request):
-    ldgr2 = Customer_Masterdata(date=request.POST['date'],reportdate=request.POST['reportdate'],)
-    ldgr2.save()
-    return redirect( '/')
+    # ldgr2 = Customer_Masterdata(date=request.POST['date'],report_date=request.POST['report_date'],)
+    # ldgr2.save()
+
+    dt = request.POST.get('date')
+    report1 = Customer.objects.all()
+    report = report1.filter(created_at = dt)
+    context = {'report': report}
+    return render(request,'Sam/Customer Masterdata.html', context)
+    
+    #   if request.method == 'POST':
+    #     dat = request.GET.get('date')
+    #     # ldgr2 = Customer_Masterdata(date=request.POST['date'],report_date=request.POST['report_date'],)
+    # # ldgr2.save()
+    # # return redirect( 'CustomerMasterdataReport')
+    
+    # # ldgr2.date = request.POST.get['date']
+    
+    
+    #     report = Customer.objects.filter(created_at=dat)
+    #     # cust = Customer.objects.filter(created_at=date).first()
+    #     if dat == Customer.created_at:
+            
+    #         # context = {'report':report}
+    #         return render(request,'Sam/Customer Masterdata.html',{'report':report})  
+    #     #     return render(request,'Sam/Customer Masterdata.html', {'report':report})
+       
+          
+    #     return HttpResponse('Admin Login Successfully')
+
+   
+
 
 def gosupstms(request):
     return render(request,'Sam/Supplier AccountStatement.html')
 def supstmscreate(request):
-    cus1 = Supplier_Statement(date=request.POST['date'], report_period=request.POST['report_period'],Supplier_name= request.POST['Supplier_name'],Supplier_id=request.POST['Supplier_id'],)
-    cus1.save()
-    return redirect('/')
+    # cus1 = Supplier_Statement(date=request.POST['date'], report_period=request.POST['report_period'],Supplier_name= request.POST['Supplier_name'],Supplier_id=request.POST['Supplier_id'],)
+    # cus1.save()
+    # return redirect('/')
+
+    custid = request.POST.get('Supplier_id')
+    # custnm = request.POST.get('customer_name')
+    report1 = PReceipt.objects.all()
+    report = report1.filter(supp_id = custid)
+    context = {'report': report}
+    return render(request,'Sam/Supplier AccountStatement.html', context)
+
+
 def gosupouts(request):
     return render(request,'Sam/Supplier Outstanding.html')
 def supoutscreate(request):
-    cus1 = Supplier_Outstand(date=request.POST['date'], report_date=request.POST['report_date'],Supplier_name= request.POST['Supplier_name'],Supplier_id=request.POST['Supplier_id'],)
-    cus1.save()
-    return redirect('/')
+    # cus1 = Supplier_Outstand(date=request.POST['date'], report_date=request.POST['report_date'],Supplier_name= request.POST['Supplier_name'],Supplier_id=request.POST['Supplier_id'],)
+    # cus1.save()
+    # return redirect('/')
+
+    custid = request.POST.get('Supplier_id')
+    # custnm = request.POST.get('customer_name')
+    report1 = PReceipt.objects.all()
+    report = report1.filter(supp_id = custid)
+    context = {'report': report}
+    return render(request,'Sam/Supplier Outstanding.html', context)
+
+
 def gosupinvo(request):
     return render(request,'Sam/Supplier InvoiceHistory.html')
 def supinvocreate(request):
@@ -137,9 +204,39 @@ def supinvorecptcreate(request):
 def gosupmasterdata(request):
     return render(request,'Sam/Supplier Masterdata.html')
 def supmasterdatacreate(request):
-    ldgr2 = Supplier_Masterdata(date=request.POST['date'],reportdate=request.POST['reportdate'],)
-    ldgr2.save()
-    return redirect( '/')
+    # ldgr2 = Supplier_Masterdata(date=request.POST['date'],report_date=request.POST['report_date'],)
+    # ldgr2.save()
+
+    dt = request.POST.get('date')
+    report1 = Supplier.objects.all()
+    report = report1.filter(created_at = dt)
+    context = {'report': report}
+    return render(request,'Sam/Supplier Masterdata.html', context)
+
+# def CustomerMasterdataReport(request):
+#     report = Customer.objects.all()
+#     if request.method == 'POST':
+#         date = request.POST.get['date']
+#         cust = Customer.objects.filter(created_at=date).first()
+#         if cust is None:
+#             raise AuthenticationFailed('No data')
+        
+#     context = {'report':report}
+
+#     return render(request,'Sam/Customer Masterdata.html', context)
+
+# if request.method == 'POST':
+#         ldgr2.date = request.POST.get['date']
+#         report = Customer.objects.all()
+       
+#         cust = Customer.objects.filter(created_at=ldgr2.date ).first()
+#         if cust is None:
+#             raise AuthenticationFailed('No data')
+#         else:
+#             context = {'report':report}
+
+#     return render(request,'Sam/Customer Masterdata.html', context)
+
 
 
 
@@ -170,8 +267,9 @@ def updatecust(request,id):
     cust.open_balance = request.POST['open_balance']
     cust.credit_lim_am = request.POST['credit_lim_am']
     cust.credit_lim_dur = request.POST['credit_lim_dur']
-
+    cust.updated_at = datetime.now().replace(microsecond=0)
     cust.save()
+    
     return render(request, 'Sam/dashboard.html')
 def deletecust(request, id):
     cust = Customer.objects.get(id=id)
@@ -212,7 +310,7 @@ def updatesupp(request,id):
     supp.credit_lim_dur = request.POST['credit_lim_dur']
     supp.bank_acc_name = request.POST['bank_acc_name']
     supp.bank_acc_no = request.POST['bank_acc_no']
-
+    supp.updated_at = datetime.now().replace(microsecond=0)
     supp.save()
     return render(request, 'Sam/dashboard.html')
 def deletesupp(request, id):
